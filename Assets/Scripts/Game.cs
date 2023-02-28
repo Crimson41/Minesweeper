@@ -1,13 +1,15 @@
 using System.Diagnostics;
 using System;
 using UnityEngine;
-using static System.Net.Mime.MediaTypeNames;
+using UnityEngine.UI;
+using TMPro;
 
 public class Game : MonoBehaviour
 {
     public int width = 16;
     public int height = 16;
     public int mineCount = 40;
+    public TextMeshProUGUI textMineCount;
 
     private Board board;
     private Cell[,] state;
@@ -32,6 +34,8 @@ public class Game : MonoBehaviour
 
     private void Update()
     {
+        textMineCount.text = mineCount.ToString();
+
         if (Input.GetKeyDown(KeyCode.R))
         {
             NewGame();
