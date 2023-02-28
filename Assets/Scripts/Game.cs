@@ -1,4 +1,3 @@
-using System.Diagnostics;
 using System;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,7 +8,11 @@ public class Game : MonoBehaviour
     public int width = 16;
     public int height = 16;
     public int mineCount = 40;
+
+    public int chrono;
+
     public TextMeshProUGUI textMineCount;
+    public TextMeshProUGUI textChrono;
 
     private Board board;
     private Cell[,] state;
@@ -34,7 +37,7 @@ public class Game : MonoBehaviour
 
     private void Update()
     {
-        textMineCount.text = mineCount.ToString();
+        Chrono();
 
         if (Input.GetKeyDown(KeyCode.R))
         {
@@ -102,9 +105,9 @@ public class Game : MonoBehaviour
                     }
                 }
             }
-
             state[x, y].type = Cell.Type.Mine;
         }
+        textMineCount.text = mineCount.ToString();
     }
 
     private void GenerateNumbers()
@@ -306,4 +309,9 @@ public class Game : MonoBehaviour
         return x >= 0 && x < width && y >= 0 && y < height;
     }
 
+    private void Chrono() 
+    {
+        textChrono.text = string.Format("{0:0}:{1:00}", Mathf.Floor(chrono/60),chrono%60);
+        chrono = (int)Time.time;
+    }
 }
