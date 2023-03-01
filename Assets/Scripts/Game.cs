@@ -17,7 +17,7 @@ public class Game : MonoBehaviour
 
     private Board board;
     private Cell[,] state;
-    private bool gameover;
+    private bool gameOver;
 
     private void OnValidate()
     {
@@ -44,7 +44,7 @@ public class Game : MonoBehaviour
         {
             NewGame();
         }
-        else if (!gameover)
+        else if (!gameOver)
         {
             if (Input.GetMouseButtonDown(1))
             {
@@ -59,8 +59,10 @@ public class Game : MonoBehaviour
 
     public void NewGame()
     {
+        restartChrono();
+
         state = new Cell[width, height];
-        gameover = false;
+        gameOver = false;
 
         GenerateCells();
         GenerateMines();
@@ -240,7 +242,7 @@ public class Game : MonoBehaviour
     private void Explode(Cell cell)
     {
         Debug.Log("Game Over!");
-        gameover = true;
+        gameOver = true;
         gameManager.gameOver();
 
         // Set the mine as exploded
@@ -281,7 +283,7 @@ public class Game : MonoBehaviour
         }
 
         UnityEngine.Debug.Log("Winner!");
-        gameover = true;
+        gameOver = true;
         gameManager.Win();
 
         // Flag all the mines
@@ -322,7 +324,7 @@ public class Game : MonoBehaviour
         textChrono.text = string.Format("{0:0}:{1:00}", Mathf.Floor(chrono/60),chrono%60);
         chrono = (int)Time.time;
 
-        if (gameover == true)
+        if (gameOver == true)
         {
             Time.timeScale = 0;
         }
@@ -336,5 +338,11 @@ public class Game : MonoBehaviour
         //{
         //    chrono = Time.timeSinceLevelLoad;
         //}
+    }
+
+    private void restartChrono()
+    {
+        chrono = 0;
+        
     }
 }

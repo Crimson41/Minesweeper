@@ -6,11 +6,11 @@ using UnityEngine.SceneManagement;
 public class GameManagerScript : MonoBehaviour
 {
     public GameObject gameOverUi;
-    public GameObject WinUi;
+    public GameObject winUi;
 
     public void Win() 
     {
-        WinUi.SetActive(true);
+        winUi.SetActive(true);
     }
     public void gameOver()
     {
