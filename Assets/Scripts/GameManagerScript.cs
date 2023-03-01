@@ -22,6 +22,11 @@ public class GameManagerScript : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
+    public void MainMenu()
+    {
+        SceneManager.LoadScene("Menu");
+    }
+
     //public void Quit()
     //{
     //    Application.Quit();
