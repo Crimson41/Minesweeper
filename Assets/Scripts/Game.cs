@@ -8,11 +8,12 @@ public class Game : MonoBehaviour
     public int width = 16;
     public int height = 16;
     public int mineCount = 40;
-
     public int chrono;
 
     public TextMeshProUGUI textMineCount;
     public TextMeshProUGUI textChrono;
+
+    public GameManagerScript gameManager;
 
     private Board board;
     private Cell[,] state;
@@ -56,7 +57,7 @@ public class Game : MonoBehaviour
         }
     }
 
-    private void NewGame()
+    public void NewGame()
     {
         state = new Cell[width, height];
         gameover = false;
@@ -238,8 +239,9 @@ public class Game : MonoBehaviour
 
     private void Explode(Cell cell)
     {
-        UnityEngine.Debug.Log("Game Over!");
+        Debug.Log("Game Over!");
         gameover = true;
+        gameManager.gameOver();
 
         // Set the mine as exploded
         cell.exploded = true;
@@ -280,6 +282,7 @@ public class Game : MonoBehaviour
 
         UnityEngine.Debug.Log("Winner!");
         gameover = true;
+        gameManager.Win();
 
         // Flag all the mines
         for (int x = 0; x < width; x++)
@@ -318,5 +321,20 @@ public class Game : MonoBehaviour
     {
         textChrono.text = string.Format("{0:0}:{1:00}", Mathf.Floor(chrono/60),chrono%60);
         chrono = (int)Time.time;
+
+        if (gameover == true)
+        {
+            Time.timeScale = 0;
+        }
+        else 
+        {
+            
+            Time.timeScale = 1;
+        }
+
+        //if (Restart())
+        //{
+        //    chrono = Time.timeSinceLevelLoad;
+        //}
     }
 }
