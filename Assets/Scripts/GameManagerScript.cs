@@ -26,10 +26,4 @@ public class GameManagerScript : MonoBehaviour
     {
         SceneManager.LoadScene("Menu");
     }
-
-    //public void Quit()
-    //{
-    //    Application.Quit();
-    //    Debug.Log("quit");
-    //}
 }
