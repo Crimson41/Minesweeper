@@ -8,7 +8,9 @@ public class Game : MonoBehaviour
     public int width = 16;
     public int height = 16;
     public int mineCount = 40;
-    public int chrono;
+    public float chrono = 0;
+    public float chronoFixed;
+
 
     public TextMeshProUGUI textMineCount;
     public TextMeshProUGUI textChrono;
@@ -38,14 +40,14 @@ public class Game : MonoBehaviour
 
     private void Update()
     {
-        Chrono();
-
         if (Input.GetKeyDown(KeyCode.R))
         {
             NewGame();
         }
         else if (!gameOver)
         {
+            Chrono();
+
             if (Input.GetMouseButtonDown(1))
             {
                 Flag();
@@ -59,14 +61,13 @@ public class Game : MonoBehaviour
 
     public void NewGame()
     {
-        restartChrono();
-
         state = new Cell[width, height];
         gameOver = false;
 
         GenerateCells();
         GenerateMines();
         GenerateNumbers();
+        ResetChrono();
 
         Camera.main.transform.position = new Vector3(width / 2f, height / 2f, -10f);
         board.Draw(state);
@@ -321,28 +322,21 @@ public class Game : MonoBehaviour
 
     private void Chrono() 
     {
+        if (chrono >= 0)
+        {
+            chronoFixed = Mathf.Round(chrono += Time.deltaTime);
+        }
+        else
+        {
+            chrono = 0;
+        }
         textChrono.text = string.Format("{0:0}:{1:00}", Mathf.Floor(chrono/60),chrono%60);
-        chrono = (int)Time.time;
-
-        if (gameOver == true)
-        {
-            Time.timeScale = 0;
-        }
-        else 
-        {
-            
-            Time.timeScale = 1;
-        }
-
-        //if (Restart())
-        //{
-        //    chrono = Time.timeSinceLevelLoad;
-        //}
     }
 
-    private void restartChrono()
+    public void ResetChrono()
     {
         chrono = 0;
-        
     }
 }
+
+
